@@ -9,7 +9,50 @@
 </head>
 
 <body>
-    content
+    <div>
+        <button class="AToZ">Nuo A iki Z</button>
+        <button>Nuo Z iki A</button>
+        <button>Mazesni uz Lietuva</button>
+        <button>Salys Oceania regione</button>
+    </div>
+    <div id="app"></div>
+    <script>
+        fetch('https://restcountries.com/v2/all?fields=name,region,area')
+            .then(resp => resp.json())
+            .then(resp => {
+
+                let html = `<table>
+                        <thead>
+                            <th>Name city</th>
+                            <th>Reagion</th>
+                            <th>Area</th>
+                        </thead>
+                        <tbody>`
+                resp.forEach(value => {
+                    html += `<tr>
+                        <td>${value.name}</td>
+                        <td>${value.region}</td>
+                        <td>${value.area}</td>
+                        </tr>`
+
+                })
+                html += `</tbody></table>`
+
+
+
+                document.getElementById('app').innerHTML = html
+
+                document.querySelector('.AToZ').addEventListener('click', () => {
+                    alert('veikia')
+                    let array = []
+                    array.push(resp.value.name)
+                    console.log(array)
+                    array.reverse()
+
+                })
+
+            })
+    </script>
 </body>
 
 </html>

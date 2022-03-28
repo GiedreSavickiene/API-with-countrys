@@ -9,8 +9,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "dead-server": "^1.0.6"
-  }
+  "license": "ISC"
 }
