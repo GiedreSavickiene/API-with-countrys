@@ -5,53 +5,98 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./main.css">
     <title>Document</title>
 </head>
 
 <body>
-    <div>
-        <button class="AToZ">Nuo A iki Z</button>
-        <button>Nuo Z iki A</button>
-        <button>Mazesni uz Lietuva</button>
-        <button>Salys Oceania regione</button>
+    <div class="btn">
+        <button class="AToZ">From A to Z</button>
+        <button class="ZToA">From Z to A</button>
+        <button class="smaller">Smaller than Lithuania</button>
+        <button class="oceania">Countries in Oceania region</button>
     </div>
     <div id="app"></div>
     <script>
-        fetch('https://restcountries.com/v2/all?fields=name,region,area')
-            .then(resp => resp.json())
-            .then(resp => {
+        const transferData = (mode = 'A-Z') => {
+            fetch('https://restcountries.com/v2/all?fields=name,region,area')
+                .then(resp => resp.json())
+                .then(resp => {
 
-                let html = `<table>
-                        <thead>
-                            <th>Name city</th>
-                            <th>Reagion</th>
-                            <th>Area</th>
-                        </thead>
-                        <tbody>`
-                resp.forEach(value => {
-                    html += `<tr>
-                        <td>${value.name}</td>
-                        <td>${value.region}</td>
-                        <td>${value.area}</td>
-                        </tr>`
+                    if (mode == 'A-Z') {
+                        resp.sort((a, b) => {
+                            if (a.name < b.name) {
+                                return -1
+                            }
+                            if (a.name > b.name) {
+                                return 1
+                            }
+                        })
+                    }
+
+                    if (mode == 'Z-A') {
+                        resp.sort((a, b) => {
+                            if (a.name > b.name) {
+                                return -1
+                            }
+                            if (a.name < b.name) {
+                                return 1
+                            }
+                        })
+
+                    }
+
+                    if (mode == 'smaller') {
+                        resp = resp.filter(el => el.area < 65300)
+                    }
+
+                    if (mode == 'oceania') {
+                        resp = resp.filter(el => el.region === 'Oceania')
+                    }
+
+                    let html = `<table class='table'>
+                            <thead>
+                                <th>Name city</th>
+                                <th>Reagion</th>
+                                <th>Area</th>
+                            </thead>
+                            <tbody>`
+                    resp.forEach(value => {
+                        html += `<tr>
+                            <td>${value.name}</td>
+                            <td>${value.region}</td>
+                            <td>${value.area}</td>
+                            </tr>`
+
+                    })
+                    html += `</tbody></table>`
+
+
+
+                    document.getElementById('app').innerHTML = html
 
                 })
-                html += `</tbody></table>`
+        }
 
+        window.addEventListener('load', () => {
+            transferData()
+        })
 
+        document.querySelector('.AToZ').addEventListener('click', () => {
+            transferData()
+        })
 
-                document.getElementById('app').innerHTML = html
+        document.querySelector('.ZToA').addEventListener('click', () => {
+            transferData('Z-A')
+        })
 
-                document.querySelector('.AToZ').addEventListener('click', () => {
-                    alert('veikia')
-                    let array = []
-                    array.push(resp.value.name)
-                    console.log(array)
-                    array.reverse()
+        document.querySelector('.smaller').addEventListener('click', () => {
+            transferData('smaller')
+        })
 
-                })
-
-            })
+        document.querySelector('.oceania').addEventListener('click', () => {
+            transferData('oceania')
+        })
     </script>
 </body>
 

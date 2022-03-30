@@ -1,9 +1,10 @@
 .table {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
     font-family: 'Quicksand', sans-serif;
     overflow: hidden;
     font-weight: bold;
+    margin-top: 20px;
 }
 
 .table thead th {
@@ -22,4 +23,19 @@
 
 .table tbody tr:last-of-type {
     border-bottom: 2px solid #009578;
+}
+
+.btn {
+    display: flex;
+    gap: 30px;
+}
+
+.btn > .AToZ,
+.ZToA,
+.smaller,
+.oceania {
+    margin-top: 20px;
+    background-color: #009578;
+    padding: 15px;
+    font-weight: bold;
 }
